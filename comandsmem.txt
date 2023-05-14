@@ -1,0 +1,580 @@
+Команды
+
+====================================
+
+Обновление всех компонентов системы
+
+pacman -Syu
+
+(Если обновления с ошибкой: ошибка: libcap: signature from "David Runge <dvzrv@archlinux.org>" is marginal trust
+:: Файл /var/cache/pacman/pkg/libcap-2.65-1-x86_64.pkg.tar.zst поврежден (неверный или поврежденный пакет(PGP-подпись)).
+
+то надо обновить ключи:
+
+you should update the keyring
+
+pacman -Syy
+
+pacman -S archlinux-keyring
+
+https://bbs.archlinux.org/viewtopic.php?id=278518
+
+Если перестала работать яркость, смотри настройки загрузчика GRUB2, а именно:
+
+1) файл настроек тут cd /boot/grub/
+
+2) Помогло сменить параметр acpi_backlight=vendor на acpi_backlight=native, еще доступные параметры:
+acpi_backlight=vendor
+acpi_backlight=native
+acpi_backlight=video
+
+Вот тут подробней: https://wiki.archlinux.org/title/Backlight_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)#%D0%9F%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D1%8B_%D1%8F%D0%B4%D1%80%D0%B0
+
+в пункте 2.1 Параметры ядра
+
+
+=======================================
+
+Удаление зависимостей сирот pacman -Qtdq | pacman -Rns -
+
+(pacman -Qqdt | pacman -Rns -)
+
+Информация о системе: 
+
+neofetch - сперва надо поставить эту прогу
+
+
+
+====================================
+
+Установка пакетов в Pacman:
+
+https://losst.ru/ustanovka-paketov-archlinux
+
+-S – установка программ в archlinux;
+-Sw - скачать пакет но не устанавливать;
+-U - установить локальный пакет;
+-s – поиск пакета;
+-i – информация;
+-u – обновить пакеты;
+-y – обновить списки пакетов из репозиториев;
+-dd – игнорирование зависимостей;
+-g – запрос информации о группе;
+-l – вывод пакетов в виде списка;
+-o – вывод в файл;
+-R – удаление;
+-Q – запрос к базе данных установленных пакетов;
+-F – поиск по файлам;
+-D – задание и изменение цели установки уже имеющегося пакета;
+-R - удалить пакет;
+-Rn - удалять резервные копии конфигурационных файлов;
+-Rs - удалять зависимости пакета;
+
+pacman -Rdd Имя программы - Принудительное удаление чего либо
+
+===================================================
+
+Поиск каталога, куда установлена программа
+
+pacman -Ql (Имя программы)
+
+
+
+===================================================
+
+Список пакетов, которые были установлены посредством pacman: 
+
+pacman -Qqet
+
+==================================================
+
+Список установленных репозиториев в системе
+
+pacman-conf -l
+
+==================================================
+
+Поиск по репозиториям програмой pkgfile
+
+1) Устанавливаем: sudo pacman -S pkgfile
+2) Обновляем: sudo pkgfile --update
+3) Информация о пакете: pacman -Si [имя пакета] 
+4) Простой поиск, пример: pkgfile [имя пакета] или pacman -Ss [имя пакета]
+5) Поиск среди установленных пакетов:  pacman -Qs [имя_паке pacman -Qs [имя_пакета]
+6)
+================================================
+
+Установка yay
+
+Перед началом работы убедитесь, что установлена группа пакетов base-devel.
+
+pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+=================================================
+
+Установка пакетов в Arch:
+
+https://losst.ru/ustanovka-paketov-archlinux
+
+yay -S имя пакета
+
+или 
+
+Pacman -S имя пакета
+
+Через веб AUR
+
+
+cd tools # Переход в заранее созданную папку в домашнем каталоге.
+
+git clone https://aur.archlinux.org/mangohud.git # Скачивание исходников.
+
+cd mangohud # Переход в mangohud.
+
+makepkg -sric # Сборка и установка.
+
+================================================
+
+Добавление репозиториев
+
+Добавить в /etc/pacman.conf
+
+===============================================
+
+Видюха:
+
+ls /usr/share/vulkan/icd.d/ - список установленных драйверов на видяху в системе
+
+sudo pacman -S mesa-demos - Установить прогу для инфы по драйверу
+
+glxinfo -B - инфа по драйверу или vulkaninfo --summary
+
+vulkaninfo --summary - Узнать версию драйвера и какой. Лучший драйвер это RADV
+
+Обновление всех установленных компонентов системы: pacman -Syu
+
+Смена драйверов, если один из драйверов работает плохо:
+https://www.reddit.com/r/linux_gaming/comments/h8b7zv/amd_gpu_vulkan_driver_how_to_easily_switch/
+
+
+lspci -nnk | grep -i vga -A3 | grep 'in use' - точно узнать драйвер в системе 
+
+lspci -v | grep -A1 -e VGA -e 3D - точно узнать модель видюхи
+
+===============================================
+
+Помошник для менеджера пакетов pacman
+
+1) установит доп пакеты: pacman -S --needed git base-devel
+
+2) git clone https://aur.archlinux.org/yay.git - скачивается в текущую папку yay
+
+3) cd yay - переходим в каталог
+
+4) makepkg -si - устанавливаем
+
+для установки программ вводим: yay и имя программы. 
+
+Поиск по web репозиторию AUR: https://aur.archlinux.org/packages
+
+================================================
+
+Включаем TRIM — полезно SSD и жестким дискам.
+sudo systemctl enable fstrim.timer # Включаем службу.
+sudo fstrim -v / # Ручной метод.
+sudo fstrim -va / # Если первый метод не тримит весь диск
+
+======================================================
+
+Интерфейс:
+
+Ярлыки на рабочий стол: 
+
+https://aur.archlinux.org/packages/gnome-shell-extension-desktop-icons/
+
+======================================================================
+
+Ярлыки и иконки установленных приложений (пути)
+
+/usr/share/applications
+~/.local/share/applications
+
+Если хочешь создать ярлык на игру, сделай это через PORTPROTON штатными средствами!!!
+
+
+Смена иконки ярлыка: 
+
+файлы ярлыков находятся здесь: /home/USER/.local/share/applications/), в нем изменить путь на нужную тебе иконку
+
+Смена штатных ярлыков:
+
+cd /usr/share/applications/ - тут они лежат
+
+Что бы поменять, нужно в файле *.desktop указать строку вида: Icon=/home/mrsalminator/Games/Icons/terminal.png
+
+Таким образом мы указываем путь к png картинке, которая и является значком
+
+=========================================================
+
+
+STEAM
+
+Меняем radeon_icd.i686.json и radeon_icd.x86_64.json на любой другой установленный драйвер в системе. Для запуска Стима из под него.
+
+VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.i686.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json steam
+
+==========================================================
+
+Wiki материалы:
+
+Драйвер AMDGPU
+
+https://wiki.archlinux.org/title/AMDGPU#Installation
+
+Vulkan
+
+https://wiki.archlinux.org/title/AMDGPU#Installation
+
+
+===========================================================
+
+Мониторинг процессов 
+
+htop
+
+kill -9 [номер процесса] - убить процесс 
+
+kill -15 [номер процесса] - вежливая просьба программе завершить работу
+
+
+Графическое окружение:
+
+https://wiki.archlinux.org/title/i3_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)
+
+
+dwm+st+dmenu
+
+kde
+
+xfce
+
+Enlightenment
+
+deepin
+
+cinnamon
+
+lxqt 
+
+==================================================================
+
+Запуск службы SSHD 
+
+sudo systemctl start sshd запускает службу для передачи файлов на Windows PC
+
+на постоянку
+
+sudo systemctl enable sshd
+
+вырубить постоянку
+
+sudo systemctl disable sshd
+
+
+
+
+==================================================================
+
+
+
+Поиск девайсов на примере bluetooth
+
+lsusb | grep -i blue
+
+
+==================================================================
+
+Включить Bluetooth сервис
+
+systemctl start bluetooth
+
+          stop
+
+systemctl restart bluetooth
+
+Так же отредактировал файл:
+
+/etc/bluetooth/main.conf
+[Policy]
+AutoEnable=true
+
+еще установил пакеты по офф мануалу: 
+
+Install the bluez package, providing the Bluetooth protocol stack.
+Install the bluez-utils package, providing the bluetoothctl utility
+
+
+===================================================================
+
+Scroll мышки через iwheel
+
+1) Установить iwheel
+
+2) Создать конфигурационный файл в домашнем каталоге с именем .imwheelrc
+
+3) отредактировать файл, добавив в него:
+
+# Speed up Chrome scrolling
+"google-chrome$"
+None,      Up,   Button4, 4
+None,      Down, Button5, 4
+Control_L, Up,   Control_L|Button4
+Control_L, Down, Control_L|Button5
+Shift_L,   Up,   Shift_L|Button4
+Shift_L,   Down, Shift_L|Button5
+
+4) добавить sh скрипт по пути /etc/profile.d с содержанием:
+
+#!/bin/sh
+
+imwheel -b 45
+
+4) Перезапустить сервис imwheel -b 45
+
+5) убить сервис imwheel: kill -9 (номер процесса)
+
+
+====================================================================
+
+Настройка яркости монитора
+
+Посмотри значения текущей и сохраненной яркости
+(текущую яркость смотри в /sys/class/backlight/........., сохраненную в /var/lib/systemd/backlight/.........) - можешь изменить значение текущей яркости, а после перегрузки посмотреть значение сохраненной яркости.
+
+
+
+
+MEM
+
+если не будут ставится проги, поставить этот компонент hwloc в него входит lstopo
+
+
+
+
+====================================================================
+
+Управление процессором
+
+
+Утилита с GUI
+
+Посмотреть текущую частоту процессора - grep MHz /proc/cpuinfo
+
+cpupower-gui - странно работает (Мне кажется не работает)
+
+https://archlinux.org/packages/?name=cpupower
+
+https://losst.ru/chastota-protsessora-v-linux
+
+https://archlinux.org/packages/?name=cpupower - это пакеты нужные для переключения режимов через терминал по способу из статьи выше
+
+https://wiki.archlinux.org/title/CPU_frequency_scaling - статья полная с арчвики
+
+
+
+===================================================================
+
+Virtualbox
+
+Установка и настройка:
+
+https://bbs.archlinux.org/viewtopic.php?id=111368
+
+Мануал из статьи выше:
+
+Делать все из под рута
+
+1) pacman -S virtualbox
+
+2) pacman -S virtualbox-host-modules
+
+3) dkms autoinstall
+
+4) modprobe vboxdrv - видимо этот параметр запущенный из под рута решает ошибку (1908) 
+
+
+Чтобы пробросить USB устройства надо поставиь для гостевой ОС дополнения и аддоны на хосте (плагин в настройках)
+
+после добавить пользователя в группу vbox через терминал
+
+https://losst.ru/virtualbox-ne-vidit-usb-v-ubuntu
+
+ sudo usermod -a -G vboxusers $USER
+ 
+ или\и
+ 
+ Запускаем
+sudo gedit /etc/group
+и в строку vboxusers добавляем пользователя ОС виртуальной машины, например:
+vboxusers:x:131:user_pc,user_vb
+где
+user_pc - пользователь ОС хоста
+user_vb - пользователь виртуальной ОС.
+Теперь в меню "Устройства" должны появиться все USB-устройста (флешка, мышка, веб-камера и т.д.). Но надо помнить, что после подключения устройства к VB, оно автоматически отсоединится от основной ОС.
+
+ПОСЛЕ ПЕРЕЗАГРУЗКА!!!
+
+=================================
+
+Vagrant
+
+1) После установки программы заходим в нужную папку (home/mrsalminator/vagrant/) и вводим команду - vagrant init
+
+2) создается конфигорационный файл, его можно открыть через nano и изменить название дистрибутива, дистриб смотреть на сайте vagrant какие доступны
+
+3) Что бы установить машинку или запустить уже установленную пишем: vagrant up
+
+4) После запуска виртуалки, смотрим имя машинки: vagrant ssh-config
+
+5) Подрубиться по SHH: vagrant ssh default
+
+
+Если ругается на то что не получается примонтировать домашнюю папку, вот решение: 
+
+Я недавно столкнулся с этим после некоторых обновлений. Решение, которое я нашел, было
+
+vagrant plugin install vagrant-vbguest
+vagrant vbguest
+Затем, когда я vagrant upэто сделал, он запустил процесс установки правильного пакета vbguest в коробку
+
+
+=================================================
+
+Отключение блокировки экрана при закрытии крышки
+
+В /etc/systemd/logind.conf поставил
+
+HandleLidSwitch=ignore - раскоментировать строчку
+
+
+==================================================
+
+Wine
+
+https://habr.com/ru/post/124202/
+
+Установка программы в отдельную папку с отдельными настройками (папка это по типу как отдельная виртуалка):
+
+[mrsalminator@linuxbox ~]$ WINEPREFIX="/home/mrsalminator/.wine2/" wine /home/mrsalminator/PacketTracer-7.3.0-win64-setup.exe
+
+Описание Packet Tracer на сайте Wine касаемо совместимости: 
+
+https://appdb.winehq.org/objectManager.php?sClass=application&iId=11601
+
+https://appdb.winehq.org/objectManager.php?sClass=version&iId=38663
+
+Удаление программ Wine:
+
+https://forum.ubuntu.ru/index.php?topic=293751.0
+
+wine uninstaller
+
+Что бы удалить софт из конкретного префикса (папки по типу отдельной виртуалки) нужно ввести wine и путь к инсталятору программы, а сам префикс просто удаляется (жестко). Ярлыки находятся в папке .local/share/application/wine
+
+
+
+=======================================================
+
+Не работает Foliate
+
+https://github.com/johnfactotum/foliate/issues/785
+
+Отключить tracker
+
+=======================================================
+
+инфа по оперативной памяти:
+
+ОЗУ
+
+sudo dmidecode --type 17
+
+=============================================================
+
+Аудио сервер (По типу дров на звук)
+
+https://linuxmint.com.ru/viewtopic.php?t=6934
+
+sudo pacman -Sy pipewire pipewire-alsa pipewire-pulse gst-plugin-pipewire
+После ввода pacman предупредит что будет удалён pulseaudio server (y/n)
+После чего перезагрузить ПК.
+
+==============================================================
+
+Виртуализация - аналог virtual Box vBox виртуальная машина
+
+QEMU
+
+sudo pacman -S virt-manager
+
+Enable and start service
+
+sudo systemctl enable libvirtd.service
+sudo systemctl start libvirtd.service
+Add user to libvirt group to use the system-level virtual machines (qemu:///system)
+
+sudo usermod -a -G libvirt $USER
+
+Установка и настройка 
+
+https://www.youtube.com/watch?v=FFfvJUYt1qw
+
+Если на устанавливается из за того, что default сеть не активнато:
+
+sudo virsh net-list --all
+
+sudo virsh net-autostart default
+
+sudo virsh net-start default
+
+если последняя команда с ошибкой то надо доустановить пакет и перезагрузиться:
+
+sudo pacman -S ebtables iptables dnsmasq
+
+
+
+================================================
+
+Утилита RAR (UNRAR)
+
+Чтобы сохранять полный путь, который прописан в архиве нужно использовать команду x:
+
+ unrar x file.rar
+ 
+ ===============================================
+ 
+ Просмотр истории команд
+ 
+ history
+ 
+ !123 - номер команды из списка
+ 
+ =================================================
+ 
+ Включение\выключение Сети или Wi-Fi
+ 
+ nmcli networking off 
+nmcli networking on
+
+Только wi-fi
+
+nmcli radio wifi off
+nmcli radio wifi on
+
+==================================================
+
+
+

@@ -1,0 +1,506 @@
+
+
+
+dhcpcd
+
+ip a - посмотреть адаптер
+
+rfkill unblock wifi
+
+iwctl - утилита для подключения
+
+[iwd]# device list
+>wlan0
+[iwd]# station wlan0 scan
+[iwd]# station wlan0 get-networks
+
+[iwd]# station wlan0 connect Telecom-58321801
+
+
+
+
+
+fdisk -l
+
+fdisk /dev/sda
+
+d (выбираем раздел для удаления) 
+
+1
+
+d
+
+2
+
+g (создаем таблицу разделов)
+
+w - записываем
+
+cfdisk /dev/sda
+
+31M - BIOS Boot
+
+500M - под ядра EFI System
+
+а тут корень, linux filesystem хоум и свап по желанию (Свап создавать если памяти меньще 2гб, а так в два раза больше оперативы он должен быть)
+
+
+
+fdisk -l
+
+mkfs.vfat /dev/sda2 - EFI раздел
+
+mkfs.btrfs /dev/sda3 - раздел корневой и остальные
+
+mount /dev/sda3 /mnt
+
+mkdir /mnt/boot
+
+mkdir /mnt/boot/EFI
+
+mount /dev/sda2 /mnt/boot/EFI
+
+pacstrap -i /mnt/ base base-devel linux-zen linux-zen-headers linux-firmware dosfstools btrfs-progs intel-ucode iucode-tool nano (Для amd-ucode)
+
+
+=======================
+
+genfstab -U /mnt >> /mnt/etc/fstab
+
+cat /mnt/etc/fstab
+
+
+arch-chroot /mnt
+
+
+ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+
+hwclock --systohc
+
+
+nano /etc/locale.gen
+
+en_US.UTF8... (раскоментируем)
+
+ru_RU.UTF8... (раскоментируем)
+
+сохраняем выход
+
+locale-gen
+
+nano /etc/local.conf
+
+LANG=ru_RU.UTF-8
+
+nano /etc/vconsole.conf
+
+KEYMAP=ru
+FONT=cyr-sun16
+
+nano /etc/hostname
+
+macbook
+
+nano /etc/hosts
+
+127.0.0.1 localhost
+::1       localhost
+127.0.0.1 macbook.localdomain macbook
+
+===========================================
+
+passwd
+
+pacman - S grub efibootmgr dhcpcd dhclient networkmanager
+
+если не ставится, ругается на ключи то
+
+# pacman-key --init
+# pacman-key --populate archlinux
+# pacman-key --refresh-keys
+
+
+grub-install /dev/sda
+
+если не сработала то
+
+grub-install --boot-directory=/boot/EFI - для UEFI только
+
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+exit
+
+umount -R /mnt
+
+reboot
+
+==================================
+
+лог в рут
+
+nano /etc/sudoers
+
+раскоментируем Uncoment to allow members of group wheel to exe... 
+
+useradd -m -G wheel -s /bin/bas neo
+
+passwd neo
+
+exit
+
+лог в нео
+
+sudo su
+
+systemctl enable NetworkManager
+
+reboot
+
+nmcli dev wifi list
+
+sudo nmcli dev wifi connect 'Welcome 2 Hell' password 896785654
+
+sudo /etc/pacman.conf
+
+Раскоментируем ДВЕ строчки
+
+multilib и под ней include
+
+sudo pacman -Syu и пишем набор пакетов в зависимости от видео
+
+примеры
+
+= Intel =
+
+
+lib32-mesa vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-    loader libva-media-driver xf86-video-intel 
+
+
+
+= Nvidia + Intel =
+
+
+ nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl  
+
+lib32-mesa vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader libva-intel-driver xf86-video-intel 
+
+
+Здесь тоже ставим DKMS модули как описано выше 
+
+
+= AMD = 
+
+
+ lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader
+
+
+На макбук, где только нвтдиа, сперва нужно узнать версию драйвера, которая включает всебя ту видюху, что стоит!
+
+lspci | grep VGA
+
+
+
+
+Потом ставим yay
+
+Перед началом работы убедитесь, что установлена группа пакетов base-devel.
+
+pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+
+и ставим нужный пакет дров и утилит к ним с AUR
+
+yay -S nvidia-340xx
+yay -S nvidia-340xx-utils
+yay -S nvidia-340xx-settings
+
+
+
+
+ставим дисплей менеджер:
+
+Графические оболочки 
+
+
++Gnome 
+
+pacman -S  xorg xorg-server gnome gnome-extra gdm 
+ 
+Включаем дисплей менеджер systemctl enable gdm 
+
++XFCE
+
+pacman -S xorg xorg-server xfce4 xfce4-goodies lightdm lightdm-gtk-greeter 
+
+Включает дисплей менеджер systemctl enable lightdm 
+
++KDE plasma 
+
+ pacman -S xorg xorg-server plasma  plasma-wayland-session  egl-wayland sddm sddm-kcm packagekit-qt5 kde-applications 
+
+
+Включаем дисплей менеджер systemctl enable sddm 
+
+
++Сinnamon
+
+pacman -S xorg xorg-server cinnamon 
+
+
+Включаем дисплей менеджер systemctl enable gdm 
+
++Deepin 
+
+pacman -S xorg xorg-server deepin deepin-extra lightdm lightdm-deepin-greeter 
+
+
+
+Включаем дисплей менеджер systemctl enable lightdm
+
+
+
++Enlightenment
+
+pacman -S xorg xorg-server enlightenment lightdm lightdm-gtk-greeter
+
+
+Включаем дисплей менеджер systemctl enable lightdm
+
+
+
++ Mate 
+
+pacman -S xorg xorg-server  mate   mate-extra  mate-panel   mate-session-manager
+
+
+Включаем дисплей менеджер systemctl enable mdm
+
+
+
++LXDE 
+
+ pacman -S xorg xorg-server lxde-common  lxsession openbox lxde lxdm
+
+
+Включаем дисплей менеджер systemctl enable lxdm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+==================================
+
+Гайд от чувака:
+
+1)Разметка диска 
+ 
+31M  /dev/sdx1 Bios boot 
+300M /dev/sdx2 Efy system 
+512M  /dev/sdx3 swap   ( свап создаем только если меньше 2 gb оперативной памяти )
+free space /dev/sdx4 root
+
+2)Форматирование диска
+
+mkfs.vfat /dev/sdx2  (раздел Efi system) 
+mkfs.btrfs /dev/sdx4 (раздел root)
+mkswap  /dev/sdx3 (раздел swap )
+swapon /dev/sdx3  (включить swap)
+
+3)  монтирование разделов 
+
+mount /dev/sdx3 /mnt  (монтруем корневой или root )
+mkdir /mnt/boot (cозаем каталог для загрузчика - если обычный BIOS )
+
+если UEFI вводим еще одну команду
+mkdir /mnt/boot/EFI
+
+mount /dev/sdx2 /mnt/boot (монтируем Efi system бут раздел для обычного Bios )
+
+mount /dev/sdx2 /mnt/boot/EFi ( дял UEFI биоса )
+
+4) установка базовой системы 
+
+
+pacstrap -i /mnt base base-devel linux-zen linux-zen-headers linux-firmware dosfstools btrfs-progs intel-ucode iucode-tool nano  
+
+5) Генерация конфига разделов 
+
+genfstab -U /mnt >> /mnt/etc/fstab
+
+6) переход в chroot
+
+arch-chroot /mnt
+
+7) Часовой пояс
+
+ln -sf /usr/share/zoneinfo/Регион/Город /etc/localtime
+
+hwclock --systohc
+
+8) Локализация
+
+nano /etc/locale.gen   убрать решетки с нужных локалей  . английский обязательно !
+
+например 
+
+en_US.UTF-8 UTF-8
+ru_RU.UTF-8 UTF-8
+
+потом генерируем локали 
+
+locale-gen
+
+далее редактируем 
+
+nano /etc/locale.conf
+туда это
+
+LANG=ru_RU.UTF-8
+
+
+потом точно также редактируем vconsole
+
+/etc/locale.conf
+
+LANG=ru_RU.UTF-8
+
+9) Настройка сети
+
+nano /etc/hostname   (Имя компьютера)
+
+
+далее файл доменных имен 
+
+nano /etc/hosts
+
+
+127.0.0.1	localhost
+::1		localhost
+127.0.1.1	моёимякомпьютера.localdomain	моёимякомпьютера
+
+10) Initramfs
+
+mkinitcpio -p linux-zen (если ядер несколько )
+
+mkinitcpio -P linux-zen  (если ядро одно)
+
+
+11)  Пароль суперпользователя
+
+passwd
+
+12) Устанавливаем загрузчик и сетевые утилиты 
+
+pacman -S grub efibootmgr dhcpcd dhclient networkamanager 
+
+устанавливаем загрузчик 
+
+grub-install /dev/sdx    (загрузчик ставим НЕ на раздел , а на диск на котором ставим систему )
+
+grub-mkconfig -o /boot/grub/grub.cfg  (конфигурируем загрузчик ) 
+
+
+потом 
+
+exit 
+
+
+umount -R /mnt 
+
+
+логинимся в систему создаем учетную запись юзера 
+
+
+useradd -m -G wheel -s /bin/bash юзернейм 
+
+passwd юзернейм 
+
+
+nano /etc/sudoers  раскоменчиваем строку как показано в ролике
+
+
+и далее устанавливаем пакеты графики и оболочку как показано вролике 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
