@@ -1,0 +1,83 @@
+CentOS 8 / RHEL 8
+Neovim is available through EPEL (Extra Packages for Enterprise Linux)
+
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+yum install -y neovim python3-neovim
+
+======================================================================
+
+Config for python
+
+======================================================================
+
+https://www.youtube.com/watch?v=Cr8r16CJiVk
+
+1) В папке пользователя создать каталог .config и перейти в него
+
+2) создаем каталог nvim переходим в него и создаем конфиг > init.vim
+
+3) Cтавим установщиг плагинов https://github.com/junegunn/vim-plug
+
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+       
+       
+4) /home/neo/.local/share/nvim/plugged/awesome-vim-colorschemes/colors - тут лежат плагины и темы
+
+ 5) sudo dnf install nodejs
+ 6) sudo dnf install npm
+ 7) cd /home/neo/.local/share/nvim/plugged
+ 8) cd coc.nvim/
+ 9) sudo npm install -g yarn
+ 10) yarn install
+ 11) yarn build
+ 12) sudo dnf install python3-pip
+ 13) pip3 install jedi
+ 
+ 14) В nvim пишем :Cocinstall coc-python
+ 
+ 
+
+) Добавляем в него сам конфиг:
+
+:set number
+:set relativenumber
+:set autoindent
+:set tabstop=4
+:set shiftwidth=4
+:set smarttab
+:set softtabstop=4
+:set mouse=a
+
+call plug#begin()
+
+Plug 'https://github.com/vim-airline/vim-airline'
+Plug 'https://github.com/preservim/nerdtree'
+Plug 'https://github.com/tpope/vim-surround'
+Plug 'https://github.com/tpope/vim-commentary'
+Plug 'https://github.com/ap/vim-css-color'
+Plug 'https://github.com/rafi/awesome-vim-colorschemes'
+Plug 'https://github.com/ryanoasis/vim-devicons'
+Plug 'https://github.com/tc50cal/vim-terminal'
+Plug 'https://github.com/terryma/vim-multiple-cursors'
+Plug 'https://github.com/preservim/tagbar' 
+Plug 'https://github.com/neoclide/coc.nvim'
+
+set encoding=UTF-8
+
+nmap <F8> :TagbarToggle<CR>
+
+:set completeopt-=preview 
+
+source /home/neo/.local/share/nvim/plugged/awesome-vim-colorschemes/colors
+
+
+call plug#end()
+
+
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+
+
+============================================================
+
