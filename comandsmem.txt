@@ -35,6 +35,10 @@ acpi_backlight=video
 
 =======================================
 
+Переключение раскладки alt+shift
+
+Делается в Gnome Tweaks или дополнительные настройки
+
 Удаление зависимостей сирот pacman -Qtdq | pacman -Rns -
 
 (pacman -Qqdt | pacman -Rns -)
