@@ -126,6 +126,11 @@ grub-install /dev/sda
 
 grub-install --boot-directory=/boot/EFI - для UEFI только
 
+или
+
+grub-install --efi-directory=/boot/EFI --boot-directory=/boot/efi/EFI --bootloader-id=grub
+
+проблема была в том что в первой части команды я писал EFI маленькими буквами
 
 grub-mkconfig -o /boot/grub/grub.cfg
 
