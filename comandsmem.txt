@@ -39,6 +39,10 @@ acpi_backlight=video
 
 Делается в Gnome Tweaks или дополнительные настройки
 
+========================================
+
+Что бы заработали расширения в Gnome надо поставить chrome-gnome-shell
+
 Удаление зависимостей сирот pacman -Qtdq | pacman -Rns -
 
 (pacman -Qqdt | pacman -Rns -)
