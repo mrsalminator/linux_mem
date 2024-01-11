@@ -153,7 +153,7 @@ nano /etc/sudoers
 
 раскоментируем Uncoment to allow members of group wheel to exe... 
 
-useradd -m -G wheel -s /bin/bas neo
+useradd -m -G wheel -s /bin/bash neo
 
 passwd neo
 
