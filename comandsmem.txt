@@ -333,6 +333,17 @@ Install the bluez package, providing the Bluetooth protocol stack.
 Install the bluez-utils package, providing the bluetoothctl utility
 
 
+Если колонка не хочет подключаться помогло следующее:
+
+bluetoothctl
+
+pair MAC-Adress
+
+trust MAC-Adress
+
+и потом вроде подрубил через оболочку GNOME
+
+
 ===================================================================
 
 Scroll мышки через iwheel
