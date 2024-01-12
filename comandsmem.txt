@@ -454,6 +454,19 @@ user_vb - пользователь виртуальной ОС.
 
 ПОСЛЕ ПЕРЕЗАГРУЗКА!!!
 
+
+Ошибка VirtualBox can’t operate in VMX root mode. Please disable the KVM kernel extension, recompile your kernel and reboot (VERR_VMX_IN_VMX_ROOT_MODE).
+
+Из-за этого сообщения вы не сможете запустить какую-либо виртуальную машину в Virtualbox. Основная причина заключается в том, что во время загрузки был загружен модуль kvm-intel или kvm-amd. Чтобы удалить его для текущего сеанса:
+
+root@localhost:~# lsmod |grep kvm
+kvm_intel 32832 0
+kvm 182683 1 kvm_intel
+
+root@localhost:~# modprobe -r kvm_intel
+
+Больше сообщение, подобное приведенному выше, отображаться не будет.
+
 =================================
 
 Vagrant
