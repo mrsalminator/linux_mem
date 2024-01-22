@@ -467,6 +467,13 @@ root@localhost:~# modprobe -r kvm_intel
 
 Больше сообщение, подобное приведенному выше, отображаться не будет.
 
+
+Если pacman ругается на зависимости то:
+
+yay -R virtualbox-ext-oracle
+yay -S virtualbox
+yay -S virtualbox-ext-oracle
+
 =================================
 
 Vagrant
