@@ -124,7 +124,7 @@ pacman - S grub efibootmgr dhcpcd dhclient networkmanager
 
 если создал каталог с заглавных букв EFI то:
 
-grub-install —target=x86_64-efi —bootloader-id=grub —efi-directory=boot/EFI —removable
+grub-install —-target=x86_64-efi —-bootloader-id=grub —-efi-directory=boot/EFI —-removable
 
 Для MBR:
 
