@@ -1,0 +1,42 @@
+https://habr.com/ru/companies/ruvds/articles/498924/
+
+https://github.com/jawj/IKEv2-setup 
+
+# запуск автоматической установки сервера IKEv2 
+wget https://raw.githubusercontent.com/jawj/IKEv2-setup/master/setup.sh
+chmod u+x setup.sh
+./setup.sh
+....
+# Введите имя домена направленного на IP-адрес сервера
+# используйте сервис sslip.io если у вас нет домена
+# Hostname for VPN: 123-45-67-89.sslip.io - вот тут к ip vps сервака просто добавляем .sslip.io, получается 89.110.102.150.sslip.io
+Hostname for VPN: 123-45-67-89.sslip.io
+# Имя пользователя VPN
+VPN username: coolguy
+# пароль 
+VPN password (no quotes, please):
+....
+# скрипт запрос создать нового SSH-пользователя, этот шаг нельзя пропускать.
+
+Шаг 3: Настройка клиента
+
+На айфон нужно профиль скачать и только после этого заработает, профиль лежит на серваки, или на моем ядиске. Так же надо телодвижения делать и на др платформах.
+
+Шаг 4: Добавление новых пользователей
+
+Чтобы добавить нового пользователя в уже созданный сервер, отредактируйте файл /etc/ipsec.secrets.
+
+# nano /etc/ipsec.secrets
+123-45-67-89.sslip.io : RSA "privkey.pem"
+coolguy : EAP "C00lPassword"
+badguy : EAP "bAdP$$word"
+
+
+
+
+
+
+
+
+
+
