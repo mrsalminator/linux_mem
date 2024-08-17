@@ -32,7 +32,20 @@ coolguy : EAP "C00lPassword"
 badguy : EAP "bAdP$$word"
 
 
+Arch Linux/Ubuntu
 
+Управление VPN:
+Чтобы включить или выключить VPN после настройки, используйте следующие команды:
+
+Включение (подключение) VPN:
+sudo ipsec up ikev2vpn
+
+Выключение (отключение) VPN:
+sudo ipsec down ikev2vpn
+
+Проверка состояния VPN:
+sudo ipsec statusall
+Эти команды позволят вам управлять VPN-соединением
 
 
 
