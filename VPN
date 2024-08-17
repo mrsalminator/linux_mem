@@ -47,6 +47,11 @@ sudo ipsec down ikev2vpn
 sudo ipsec statusall
 Эти команды позволят вам управлять VPN-соединением
 
+Если не отключается вход по паролю:
+
+Проверьте, есть ли файлы внутри /etc/ssh / sshd_config.d , присутствует ли какой-либо конфигурационный файл; если PasswordAuthentication yes найден, вы можете удалить такую строку. 
+В Ubuntu 22.04.1 LTS iso я обнаружил, что /etc/ssh/sshd_config.d/50-cloud-init.conf переопределяет файл sshd_config, в котором включена аутентификация паролем.
+
 
 
 
