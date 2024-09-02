@@ -230,6 +230,7 @@ https://aur.archlinux.org/packages/gnome-shell-extension-desktop-icons/
 ~/.local/share/applications
 
 Если хочешь создать ярлык на игру, сделай это через PORTPROTON штатными средствами!!!
+Открываешь нужный exe и уже только потом жмешь create shortcut
 
 
 Смена иконки ярлыка: 
