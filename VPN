@@ -34,6 +34,15 @@ badguy : EAP "bAdP$$word"
 
 Arch Linux/Ubuntu
 
+Добавление strongswan в автозагрузку
+systemctl enable strongswan - не проверено, надо ли
+
+или
+
+systemctl enable ipsec
+
+
+
 Управление VPN:
 Чтобы включить или выключить VPN после настройки, используйте следующие команды:
 
