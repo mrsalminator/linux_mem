@@ -48,6 +48,19 @@ sudo ipsec down ikev2vpn
 sudo ipsec statusall
 Эти команды позволят вам управлять VPN-соединением
 
+Автозапуск:
+
+Что бы каждый раз не запускать скрипт, нужно добавить сервис в автозапуск 
+
+sudo systemctl enable strongswan-starter.service
+
+отключить strongswan, они конфликтуют с strongswan-starter
+
+sudo systemctl disable strongswan
+
+Проверить конфиг ipsec, что он в автозапуске по пути /etc/ipsec.conf (auto=start)
+
+
 Если не отключается вход по паролю:
 
 Проверьте, есть ли файлы внутри /etc/ssh / sshd_config.d , присутствует ли какой-либо конфигурационный файл; если PasswordAuthentication yes найден, вы можете удалить такую строку. 
