@@ -60,6 +60,14 @@ sudo systemctl disable strongswan
 
 Проверить конфиг ipsec, что он в автозапуске по пути /etc/ipsec.conf (auto=start)
 
+В блоке conn ikev2vpn
+
+В самом конце меняем auto=add на auto=start 
+
+После этого можно подключаться к vpn командами sudo ipsec start и sudo ipsec stop
+
+
+
 
 Если не отключается вход по паролю:
 
