@@ -1,0 +1,18 @@
+
+===========================
+yt-dlp
+===========================
+
+
+
+1) sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+
+2) udo chmod a+rx /usr/local/bin/yt-dlp
+
+3) yt-dlp --version
+
+4) sudo yt-dlp -U
+
+5) Cookies.txt Extension для Chrome - после сохраняешь в txt куки открыв адрес видео
+
+6) yt-dlp --cookies cookies.txt <URL-видео> - что бы скачать видео с указанием файлов cookies, если требует авторизации
