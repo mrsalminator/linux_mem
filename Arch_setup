@@ -60,7 +60,7 @@ mkdir /mnt/boot/EFI
 
 mount /dev/sda2 /mnt/boot/EFI
 
-pacstrap -i /mnt/ base base-devel linux-zen linux-zen-headers linux-firmware dosfstools btrfs-progs intel-ucode iucode-tool nano (Для amd-ucode)
+pacstrap -i /mnt/ base base-devel linux-zen linux-zen-headers linux-firmware dosfstools btrfs-progs intel-ucode iucode-tool nano usbmuxd vi (Для amd-ucode)
 
 
 =======================
